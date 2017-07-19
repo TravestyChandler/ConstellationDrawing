@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2015
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConstellationDrawing.CSharp", "ConstellationDrawing.CSharp.csproj", "{8ADD43DD-F242-2701-4CB3-182E58343F43}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConstellationDrawing.CSharp.Editor", "ConstellationDrawing.CSharp.Editor.csproj", "{AC0A3866-08F7-0E22-A71D-876B6147F649}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8ADD43DD-F242-2701-4CB3-182E58343F43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8ADD43DD-F242-2701-4CB3-182E58343F43}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8ADD43DD-F242-2701-4CB3-182E58343F43}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8ADD43DD-F242-2701-4CB3-182E58343F43}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC0A3866-08F7-0E22-A71D-876B6147F649}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC0A3866-08F7-0E22-A71D-876B6147F649}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC0A3866-08F7-0E22-A71D-876B6147F649}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC0A3866-08F7-0E22-A71D-876B6147F649}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
