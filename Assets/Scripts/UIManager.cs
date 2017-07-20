@@ -19,6 +19,11 @@ public class UIManager : MonoBehaviour {
 
     public Slider inkSlider;
 
+    public Text ConstellationName;
+
+    public Image ConstellationImage;
+
+    public Text scoreText;
     void Awake()
     {
         if(Instance == null)
@@ -31,12 +36,17 @@ public class UIManager : MonoBehaviour {
             return;
         }
     }
-
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            Application.CaptureScreenshot("starmapperscreenshot.png");
+        }
+    }
     public void GameRestart()
     {
         GameManager.Instance.currentPhase = GameManager.GamePhase.Starting;
         gameTimer.enabled = false;
-        roundStartTimer.enabled = true;
         StartCoroutine(HideFailurePanel());
     }
     public void SetSliderValue(float val)
@@ -47,7 +57,10 @@ public class UIManager : MonoBehaviour {
     {
         gameTimer.text = time.ToString("0.00");
     }
-
+    public void SetScoreText(int score)
+    {
+        scoreText.text = "Score: " + score.ToString();
+    }
     public void SetRoundStartTimer(float time)
     {
         roundStartTimer.text = "Next round in: " + time.ToString("0.00");
@@ -57,6 +70,8 @@ public class UIManager : MonoBehaviour {
     {
         roundStartTimer.enabled = true;
         gameTimer.enabled = false;
+        ConstellationName.enabled = false;
+        ConstellationImage.enabled = false;
         successPanel.gameObject.SetActive(false);
         failurePanel.gameObject.SetActive(false);
     }
@@ -64,16 +79,33 @@ public class UIManager : MonoBehaviour {
     public void RoundVictory()
     {
         gameTimer.enabled = false;
-        roundStartTimer.enabled = true;
+        //roundStartTimer.enabled = true;
+        ConstellationName.enabled = false;
+        ConstellationImage.enabled = false;
         StartCoroutine(ShowSuccessPanel());
+    }
+    public void HideSuccess()
+    {
+        StartCoroutine(HideSuccessPanel());
+    }
+    public void NextRoundStart()
+    {
+        roundStartTimer.enabled = true;
+    }
+    public void SetConstellationData(ConstellationData conDat)
+    {
+        ConstellationImage.sprite = conDat.constellationImage;
+        ConstellationName.text = conDat.constellationName;
     }
 
     public void RoundStart()
     {
         gameTimer.enabled = true;
         roundStartTimer.enabled = false;
-        StartCoroutine(HideSuccessPanel());
+        ConstellationName.enabled = true;
+        ConstellationImage.enabled = true;
     }
+
     public IEnumerator ShowSuccessPanel()
     {
         successPanel.gameObject.SetActive(true);
@@ -126,6 +158,8 @@ public class UIManager : MonoBehaviour {
     public void RoundLoss()
     {
         gameTimer.enabled = false;
+        ConstellationName.enabled = false;
+        ConstellationImage.enabled = false;
         StartCoroutine(ShowFailurePanel());
     }
 }

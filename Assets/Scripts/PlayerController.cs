@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour {
     public LineRenderer lr;
     public int maxInk = 50;
     public int currentInk;
+    public int inkThisRound;
     void Awake()
     {
         if(Instance == null)
@@ -25,15 +26,18 @@ public class PlayerController : MonoBehaviour {
     }
     void Start () {
         cam = Camera.main;
-        currentInk = maxInk;
+        inkThisRound = maxInk;
+        currentInk = inkThisRound;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        if (GameManager.Instance.currentPhase == GameManager.GamePhase.Running && currentInk > 0)
+        if (GameManager.Instance.currentPhase == GameManager.GamePhase.Running)
         {
+            inkThisRound = Mathf.Clamp(maxInk - GameManager.Instance.Score, 70, maxInk);
             if (Input.GetMouseButtonDown(0))
             {
+                Debug.Log(inkThisRound);
                 ClearLineRend();
                 lr.positionCount = 1;
                 startPos = cam.ScreenToWorldPoint(Input.mousePosition);
@@ -41,9 +45,9 @@ public class PlayerController : MonoBehaviour {
                 lr.SetPosition(0, startPos);
                 currentPos = startPos;
                 currentInk--;
-                UIManager.Instance.SetSliderValue((float)currentInk / (float)maxInk);
+                UIManager.Instance.SetSliderValue((float)currentInk / (float)inkThisRound);
             }
-            else if (Input.GetMouseButton(0))
+            else if (Input.GetMouseButton(0) && currentInk > 0)
             {
                 //Debug.Log(Input.mousePosition);
                 currentPos = cam.ScreenToWorldPoint(Input.mousePosition);
@@ -54,9 +58,8 @@ public class PlayerController : MonoBehaviour {
                     lr.positionCount++;
                     lr.SetPosition(lr.positionCount - 1, currentPos);
                     currentInk--;
-                    UIManager.Instance.SetSliderValue((float)currentInk / (float)maxInk);
+                    UIManager.Instance.SetSliderValue((float)currentInk / (float)inkThisRound);
                 }
-                Debug.Log(currentPos);
             }
             else if (Input.GetMouseButtonUp(0))
             {
@@ -64,11 +67,15 @@ public class PlayerController : MonoBehaviour {
                 currentPos.z += 10;
                 lr.positionCount++;
                 lr.SetPosition(lr.positionCount - 1, currentPos);
-                currentInk = maxInk;
-                UIManager.Instance.SetSliderValue((float)currentInk / (float)maxInk);
-            }
+                currentInk = inkThisRound;
+                UIManager.Instance.SetSliderValue((float)currentInk / (float)inkThisRound);
+            }  
         }
-	}
+        else
+        {
+            currentInk = inkThisRound;
+        }
+    }
 
     public void ClearLineRend()
     {
@@ -77,7 +84,8 @@ public class PlayerController : MonoBehaviour {
 
     public void ResetPlayerController()
     {
-        currentInk = maxInk;
+        currentInk = inkThisRound;
+        UIManager.Instance.SetSliderValue((float)currentInk / (float)inkThisRound);
         ClearLineRend();
     }
 }
